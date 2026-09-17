@@ -1,5 +1,6 @@
 import pygame
 
+from camera import Camera
 from config import BACKGROUND_COLOUR, MIN_HEIGHT, MIN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, TARGET_FPS
 from cube import create_cube
 from renderer import Renderer
@@ -10,7 +11,8 @@ def main() -> None:
     pygame.display.set_caption("Py3D")
     clock = pygame.time.Clock()
 
-    renderer = Renderer(screen)
+    camera = Camera()
+    renderer = Renderer(screen, camera)
     mesh = create_cube()
 
     while True:
@@ -31,10 +33,13 @@ def main() -> None:
                 if height < MIN_HEIGHT:
                     screen = pygame.display.set_mode((width, MIN_HEIGHT), pygame.RESIZABLE)
 
-        clock.tick(TARGET_FPS)
+        camera.update()
+        
         screen.fill(BACKGROUND_COLOUR)
         renderer.render_mesh(mesh)
         pygame.display.flip()
+
+        clock.tick(TARGET_FPS)
 
 
 if __name__ == "__main__":

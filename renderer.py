@@ -1,5 +1,6 @@
 import pygame
 
+from camera import Camera
 from config import VERTEX_COLOUR, WIREFRAME_COLOUR
 from mesh import Mesh
 from projection import project_point, world_to_screen
@@ -7,8 +8,9 @@ from vector2 import Vector2
 
 
 class Renderer:
-    def __init__(self, screen: pygame.surface.Surface) -> None:
+    def __init__(self, screen: pygame.surface.Surface, camera: Camera) -> None:
         self.screen = screen
+        self.camera = camera
 
     def render_mesh(self, mesh: Mesh) -> None:
         scale = 400.0
@@ -20,6 +22,7 @@ class Renderer:
 
         # first calculate the screen coordinates of each vertex
         for vertex in mesh.vertices:
+            vertex = self.camera.world_to_camera(vertex)
             vertex2d = project_point(vertex)
             point = world_to_screen(vertex2d, width, height, scale)
             points.append(point)
