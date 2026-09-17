@@ -1,12 +1,17 @@
 import pygame
 
 from config import BACKGROUND_COLOUR, MIN_HEIGHT, MIN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, TARGET_FPS
+from cube import create_cube
+from renderer import Renderer
 
 
 def main() -> None:
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
     pygame.display.set_caption("Py3D")
     clock = pygame.time.Clock()
+
+    renderer = Renderer(screen)
+    mesh = create_cube()
 
     while True:
         for event in pygame.event.get():
@@ -28,6 +33,7 @@ def main() -> None:
 
         clock.tick(TARGET_FPS)
         screen.fill(BACKGROUND_COLOUR)
+        renderer.render_mesh(mesh)
         pygame.display.flip()
 
 
