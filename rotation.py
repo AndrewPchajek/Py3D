@@ -22,3 +22,10 @@ def rotate_z(vector: Vector3, angle: float) -> Vector3:
     y = vector.x * math.sin(angle) + vector.y * math.cos(angle)
     z = vector.z
     return Vector3(x, y, z)
+
+
+def rotate(vector: Vector3, rotation: Vector3) -> Vector3:
+    vector = rotate_x(vector, rotation.x)
+    vector = rotate_y(vector, rotation.y)
+    vector = rotate_z(vector, rotation.z)
+    return vector
