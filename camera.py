@@ -27,9 +27,6 @@ class Camera:
         if keys[pygame.K_q]:
             self.position.y -= self.SPEED
 
-    def world_to_camera(self, point: Vector3) -> Vector3:
-        return point - self.position
-
     def transform_vertices(self, vertices: list[Vector3]) -> list[Vector3]:
         transformed_vertices: list[Vector3] = []
 
