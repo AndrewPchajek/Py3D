@@ -30,13 +30,16 @@ class Renderer:
             point = world_to_screen(point, width, height, scale)
             points.append(point)
 
-        # use the vertex coordinates to draw the edges first
-        for i, j in object3d.mesh.edges:
-            pygame.draw.line(
+        # use the vertex coordinates to draw the triangles first
+        for i, j, k in object3d.mesh.triangles:
+            pygame.draw.polygon(
                 self.screen,
                 WIREFRAME_COLOUR,
-                (points[i].x, points[i].y),
-                (points[j].x, points[j].y),
+                (
+                    (points[i].x, points[i].y),
+                    (points[j].x, points[j].y),
+                    (points[k].x, points[k].y),
+                ),
                 line_width,
             )
 
