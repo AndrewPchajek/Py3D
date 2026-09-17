@@ -1,5 +1,6 @@
 import pygame
 
+from rotation import rotate
 from vector3 import Vector3
 
 
@@ -8,6 +9,7 @@ class Camera:
 
     def __init__(self) -> None:
         self.position = Vector3(0, 0, 0)
+        self.rotation = Vector3(0, 0, 0)
 
     def update(self) -> None:
         keys = pygame.key.get_pressed()
@@ -27,3 +29,14 @@ class Camera:
 
     def world_to_camera(self, point: Vector3) -> Vector3:
         return point - self.position
+
+    def transform_vertices(self, vertices: list[Vector3]) -> list[Vector3]:
+        transformed_vertices: list[Vector3] = []
+
+        for vertex in vertices:
+            # apply camera rotation and position to each vertex
+            vertex = rotate(vertex, -1 * self.rotation)
+            vertex = vertex - self.position
+            transformed_vertices.append(vertex)
+
+        return transformed_vertices

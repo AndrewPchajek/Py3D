@@ -13,7 +13,7 @@ def main() -> None:
 
     camera = Camera()
     renderer = Renderer(screen, camera)
-    mesh = create_cube()
+    object3d = create_cube()
 
     while True:
         for event in pygame.event.get():
@@ -36,7 +36,7 @@ def main() -> None:
         camera.update()
         
         screen.fill(BACKGROUND_COLOUR)
-        renderer.render_mesh(mesh)
+        renderer.render_object(object3d)
         pygame.display.flip()
 
         clock.tick(TARGET_FPS)

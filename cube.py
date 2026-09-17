@@ -1,8 +1,9 @@
 from mesh import Mesh
+from object3d import Object3D
 from vector3 import Vector3
 
 
-def create_cube() -> Mesh:
+def create_cube() -> Object3D:
     vertices = [Vector3(i, j, k) for i in (-1, 1) for j in (-1, 1) for k in (-1, 1)]
     edges = [
         (0, 1),
@@ -18,4 +19,4 @@ def create_cube() -> Mesh:
         (5, 7),
         (6, 7),
     ]
-    return Mesh(vertices, edges)
+    return Object3D(Mesh(vertices, edges))

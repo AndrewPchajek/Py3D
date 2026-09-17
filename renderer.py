@@ -2,7 +2,7 @@ import pygame
 
 from camera import Camera
 from config import VERTEX_COLOUR, WIREFRAME_COLOUR
-from mesh import Mesh
+from object3d import Object3D
 from projection import project_point, world_to_screen
 from vector2 import Vector2
 
@@ -12,23 +12,26 @@ class Renderer:
         self.screen = screen
         self.camera = camera
 
-    def render_mesh(self, mesh: Mesh) -> None:
+    def render_object(self, object3d: Object3D) -> None:
         scale = 400.0
         radius = 5
         line_width = 1
 
-        points: list[Vector2] = []
         width, height = self.screen.get_size()
+        points: list[Vector2] = []
 
-        # first calculate the screen coordinates of each vertex
-        for vertex in mesh.vertices:
-            vertex = self.camera.world_to_camera(vertex)
-            vertex2d = project_point(vertex)
-            point = world_to_screen(vertex2d, width, height, scale)
+        # object -> world space -> camera space
+        world_vertices = object3d.get_transformed_vertices()
+        camera_vertices = self.camera.transform_vertices(world_vertices)
+
+        # camera space -> 2d space -> screen coordinates
+        for vertex in camera_vertices:
+            point = project_point(vertex)
+            point = world_to_screen(point, width, height, scale)
             points.append(point)
 
         # use the vertex coordinates to draw the edges first
-        for i, j in mesh.edges:
+        for i, j in object3d.mesh.edges:
             pygame.draw.line(
                 self.screen,
                 WIREFRAME_COLOUR,
