@@ -33,6 +33,10 @@ def main() -> None:
                 if height < MIN_HEIGHT:
                     screen = pygame.display.set_mode((width, MIN_HEIGHT), pygame.RESIZABLE)
 
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_n:
+                    renderer.toggle_normal()
+
         camera.update()
         object3d.update()
 

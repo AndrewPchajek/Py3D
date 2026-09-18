@@ -11,6 +11,10 @@ class Renderer:
     def __init__(self, screen: pygame.surface.Surface, camera: Camera) -> None:
         self.screen = screen
         self.camera = camera
+        self.render_normal = False
+
+    def toggle_normal(self) -> None:
+        self.render_normal = not self.render_normal
 
     def render_object(self, object3d: Object3D) -> None:
         scale = 400.0
@@ -75,3 +79,16 @@ class Renderer:
                     ),
                     line_width,
                 )
+
+                if self.render_normal:
+                    center_pos = world_to_screen(project_point(center), width, height, scale)
+                    normal_end_pos = world_to_screen(
+                        project_point(center + normal), width, height, scale
+                    )
+
+                    pygame.draw.line(
+                        self.screen,
+                        (255, 165, 0),
+                        (center_pos.x, center_pos.y),
+                        (normal_end_pos.x, normal_end_pos.y),
+                    )
