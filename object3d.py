@@ -1,4 +1,5 @@
 import pygame
+from objects.cylinder import create_cylinder
 
 from objects.cube import create_cube
 from objects.pyramid import create_pyramid
@@ -25,6 +26,9 @@ class Object3D:
             self.reset_position_and_rotation()
         if keys[pygame.K_2]:
             self.mesh = create_pyramid()
+            self.reset_position_and_rotation()
+        if keys[pygame.K_3]:
+            self.mesh = create_cylinder()
             self.reset_position_and_rotation()
 
         if keys[pygame.K_UP]:
