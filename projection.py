@@ -2,9 +2,9 @@ from vector2 import Vector2
 from vector3 import Vector3
 
 
-def project_point(vector: Vector3, distance: float = 5.0) -> Vector2:
-    x = vector.x / (vector.z + distance)
-    y = vector.y / (vector.z + distance)
+def project_point(vector: Vector3) -> Vector2:
+    x = vector.x / (vector.z)
+    y = vector.y / (vector.z)
     return Vector2(x, y)
 
 
