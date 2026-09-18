@@ -8,7 +8,7 @@ class Camera:
     SPEED = 0.01
 
     def __init__(self) -> None:
-        self.position = Vector3(0, 0, 0)
+        self.position = Vector3(0, 0, -3)
         self.rotation = Vector3(0, 0, 0)
 
     def update(self) -> None:

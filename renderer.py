@@ -1,7 +1,7 @@
 import pygame
 
 from camera import Camera
-from config import VERTEX_COLOUR, WIREFRAME_COLOUR
+from config import WIREFRAME_COLOUR
 from object3d import Object3D
 from projection import project_point, world_to_screen
 from vector2 import Vector2
@@ -14,7 +14,6 @@ class Renderer:
 
     def render_object(self, object3d: Object3D) -> None:
         scale = 400.0
-        radius = 5
         line_width = 1
 
         width, height = self.screen.get_size()
@@ -76,7 +75,3 @@ class Renderer:
                     ),
                     line_width,
                 )
-
-        # draw the vertices
-        for point in points:
-            pygame.draw.circle(self.screen, VERTEX_COLOUR, (point.x, point.y), radius)
