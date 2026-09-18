@@ -2,6 +2,7 @@ import pygame
 
 from camera import Camera
 from config import BACKGROUND_COLOUR, MIN_HEIGHT, MIN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, TARGET_FPS
+from light import Light
 from object3d import Object3D
 from renderer import Renderer
 
@@ -12,7 +13,8 @@ def main() -> None:
     clock = pygame.time.Clock()
 
     camera = Camera()
-    renderer = Renderer(screen, camera)
+    light = Light()
+    renderer = Renderer(screen, camera, light)
     object3d = Object3D()
 
     while True:

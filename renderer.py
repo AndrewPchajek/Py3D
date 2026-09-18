@@ -2,16 +2,19 @@ import pygame
 
 from camera import Camera
 from config import WIREFRAME_COLOUR
+from light import Light
 from object3d import Object3D
 from projection import project_point, world_to_screen
 from vector2 import Vector2
 
 
 class Renderer:
-    def __init__(self, screen: pygame.surface.Surface, camera: Camera) -> None:
+    def __init__(self, screen: pygame.surface.Surface, camera: Camera, light:Light) -> None:
         self.screen = screen
         self.camera = camera
+        self.light = light
         self.render_normal = False
+
 
     def toggle_normal(self) -> None:
         self.render_normal = not self.render_normal
