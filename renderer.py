@@ -51,9 +51,9 @@ class Renderer:
             i, j, k = triangle
 
             # get the world coordinates of the triangle vertices
-            a = world_vertices[i]
-            b = world_vertices[j]
-            c = world_vertices[k]
+            a = camera_vertices[i]
+            b = camera_vertices[j]
+            c = camera_vertices[k]
 
             # calculate the normal of the triangle
             edge1 = c - a
@@ -62,7 +62,7 @@ class Renderer:
 
             # calculate the vector from the center of the triangle to the camera
             center = (a + b + c) / 3
-            to_camera = (self.camera.position - center).normalize()
+            to_camera = (-1 * center).normalize()
 
             # only draw triangle of the normal is facing in similar direction as towards the camera
             if normal.dot(to_camera) >= 0:
