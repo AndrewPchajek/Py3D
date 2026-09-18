@@ -1,13 +1,29 @@
+import pygame
+
 from mesh import Mesh
 from rotation import rotate
 from vector3 import Vector3
 
 
 class Object3D:
+    SPEED = 0.01
+
     def __init__(self, mesh: Mesh) -> None:
         self.mesh = mesh
-        self.position= Vector3(0, 0, 0)
-        self.rotation= Vector3(0, 0, 0)
+        self.position = Vector3(0, 0, 0)
+        self.rotation = Vector3(0, 0, 0)
+
+    def update(self) -> None:
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_UP]:
+            self.rotation.x += self.SPEED
+        if keys[pygame.K_DOWN]:
+            self.rotation.x -= self.SPEED
+        if keys[pygame.K_LEFT]:
+            self.rotation.y += self.SPEED
+        if keys[pygame.K_RIGHT]:
+            self.rotation.y -= self.SPEED
 
     def get_transformed_vertices(self) -> list[Vector3]:
         transformed_vertices: list[Vector3] = []

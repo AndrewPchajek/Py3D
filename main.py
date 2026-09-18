@@ -34,7 +34,8 @@ def main() -> None:
                     screen = pygame.display.set_mode((width, MIN_HEIGHT), pygame.RESIZABLE)
 
         camera.update()
-        
+        object3d.update()
+
         screen.fill(BACKGROUND_COLOUR)
         renderer.render_object(object3d)
         pygame.display.flip()
