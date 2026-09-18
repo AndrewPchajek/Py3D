@@ -2,7 +2,7 @@ import pygame
 
 from camera import Camera
 from config import BACKGROUND_COLOUR, MIN_HEIGHT, MIN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, TARGET_FPS
-from cube import create_cube
+from object3d import Object3D
 from renderer import Renderer
 
 
@@ -13,7 +13,7 @@ def main() -> None:
 
     camera = Camera()
     renderer = Renderer(screen, camera)
-    object3d = create_cube()
+    object3d = Object3D()
 
     while True:
         for event in pygame.event.get():
