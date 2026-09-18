@@ -33,7 +33,7 @@ class Vector3:
         return self / length
 
     def dot(self, other: Vector3) -> float:
-        return self.x * other.x + self.y * other.y + self.z + other.z
+        return self.x * other.x + self.y * other.y + self.z * other.z
 
     def cross(self, other: Vector3) -> Vector3:
         return Vector3(
