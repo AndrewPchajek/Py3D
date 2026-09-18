@@ -1,8 +1,9 @@
 import pygame
-from objects.cylinder import create_cylinder
 
 from objects.cube import create_cube
+from objects.cylinder import create_cylinder
 from objects.pyramid import create_pyramid
+from objects.sphere import create_sphere
 from rotation import rotate
 from vector3 import Vector3
 
@@ -29,6 +30,9 @@ class Object3D:
             self.reset_position_and_rotation()
         if keys[pygame.K_3]:
             self.mesh = create_cylinder()
+            self.reset_position_and_rotation()
+        if keys[pygame.K_4]:
+            self.mesh = create_sphere()
             self.reset_position_and_rotation()
 
         if keys[pygame.K_UP]:
