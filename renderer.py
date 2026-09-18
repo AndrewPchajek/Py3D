@@ -30,8 +30,26 @@ class Renderer:
             point = world_to_screen(point, width, height, scale)
             points.append(point)
 
+        # get the depth of each triangle
+        triangles_to_draw: list[tuple[float, tuple[int, int, int]]] = []
+        for triangle in object3d.mesh.triangles:
+            i, j, k = triangle
+            a = camera_vertices[i]
+            b = camera_vertices[j]
+            c = camera_vertices[k]
+
+            # only draw triangles in in front of camera
+            if a.z > 0 and b.z > 0 and c.z > 0:
+                depth = (a.z + b.z + c.z) / 3
+                triangles_to_draw.append((depth, triangle))
+
+        # painters algorithm
+        triangles_to_draw.sort(reverse=True)
+
         # use the vertex coordinates to draw the triangles first
-        for i, j, k in object3d.mesh.triangles:
+        for depth, triangle in triangles_to_draw:
+            i, j, k = triangle
+
             # get the world coordinates of the triangle vertices
             a = world_vertices[i]
             b = world_vertices[j]
