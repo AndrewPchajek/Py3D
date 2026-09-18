@@ -32,16 +32,32 @@ class Renderer:
 
         # use the vertex coordinates to draw the triangles first
         for i, j, k in object3d.mesh.triangles:
-            pygame.draw.polygon(
-                self.screen,
-                WIREFRAME_COLOUR,
-                (
-                    (points[i].x, points[i].y),
-                    (points[j].x, points[j].y),
-                    (points[k].x, points[k].y),
-                ),
-                line_width,
-            )
+            # get the world coordinates of the triangle vertices
+            a = world_vertices[i]
+            b = world_vertices[j]
+            c = world_vertices[k]
+
+            # calculate the normal of the triangle
+            edge1 = c - a
+            edge2 = b - a
+            normal = edge1.cross(edge2).normalize()
+
+            # calculate the vector from the center of the triangle to the camera
+            center = (a + b + c) / 3
+            to_camera = (self.camera.position - center).normalize()
+
+            # only draw triangle of the normal is facing in similar direction as towards the camera
+            if normal.dot(to_camera) >= 0:
+                pygame.draw.polygon(
+                    self.screen,
+                    WIREFRAME_COLOUR,
+                    (
+                        (points[i].x, points[i].y),
+                        (points[j].x, points[j].y),
+                        (points[k].x, points[k].y),
+                    ),
+                    line_width,
+                )
 
         # draw the vertices
         for point in points:
