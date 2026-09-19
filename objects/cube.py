@@ -1,8 +1,10 @@
+from config import BLUE
 from mesh import Mesh
+from object3d import Object3D
 from vector3 import Vector3
 
 
-def create_cube() -> Mesh:
+def create_cube() -> Object3D:
     vertices = [Vector3(i, j, k) for i in (-1, 1) for j in (-1, 1) for k in (-1, 1)]
     triangles = [
         (1, 2, 3),
@@ -18,4 +20,4 @@ def create_cube() -> Mesh:
         (4, 2, 0),
         (6, 2, 4),
     ]
-    return Mesh(vertices, triangles)
+    return Object3D(Mesh(vertices, triangles), BLUE)

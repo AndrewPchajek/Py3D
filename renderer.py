@@ -1,7 +1,6 @@
 import pygame
 
 from camera import Camera
-from config import WIREFRAME_COLOUR
 from light import Light
 from object3d import Object3D
 from projection import point_to_screen
@@ -72,7 +71,7 @@ class Renderer:
             if normal.dot(to_camera) >= 0:
                 pygame.draw.polygon(
                     self.screen,
-                    WIREFRAME_COLOUR,
+                    object3d.colour,
                     (
                         (points[i].x, points[i].y),
                         (points[j].x, points[j].y),

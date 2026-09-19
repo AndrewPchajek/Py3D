@@ -1,10 +1,12 @@
 import math
 
+from config import ORANGE
 from mesh import Mesh
+from object3d import Object3D
 from vector3 import Vector3
 
 
-def create_sphere() -> Mesh:
+def create_sphere() -> Object3D:
     rings = 16
     segments = 16
     vertices: list[Vector3] = []
@@ -49,4 +51,4 @@ def create_sphere() -> Mesh:
             )
         )
 
-    return Mesh(vertices, triangles)
+    return Object3D(Mesh(vertices, triangles), ORANGE)

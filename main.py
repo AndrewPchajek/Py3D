@@ -3,7 +3,10 @@ import pygame
 from camera import Camera
 from config import BACKGROUND_COLOUR, MIN_HEIGHT, MIN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, TARGET_FPS
 from light import Light
-from object3d import Object3D
+from objects.cube import create_cube
+from objects.cylinder import create_cylinder
+from objects.pyramid import create_pyramid
+from objects.sphere import create_sphere
 from renderer import Renderer
 
 
@@ -15,7 +18,7 @@ def main() -> None:
     camera = Camera()
     light = Light()
     renderer = Renderer(screen, camera, light)
-    object3d = Object3D()
+    object3d = create_cube()
 
     while True:
         for event in pygame.event.get():
@@ -38,6 +41,14 @@ def main() -> None:
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_n:
                     renderer.toggle_normal()
+                elif event.key == pygame.K_1:
+                    object3d = create_cube()
+                elif event.key == pygame.K_2:
+                    object3d = create_pyramid()
+                elif event.key == pygame.K_3:
+                    object3d = create_cylinder()
+                elif event.key == pygame.K_4:
+                    object3d = create_sphere()
 
         camera.update()
         object3d.update()

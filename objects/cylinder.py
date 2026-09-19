@@ -1,10 +1,12 @@
 import math
 
+from config import GREEN
 from mesh import Mesh
+from object3d import Object3D
 from vector3 import Vector3
 
 
-def create_cylinder() -> Mesh:
+def create_cylinder() -> Object3D:
     segments = 16
     vertices: list[Vector3] = []
     triangles: list[tuple[int, int, int]] = []
@@ -34,4 +36,4 @@ def create_cylinder() -> Mesh:
         triangles.append((top_center_index, 2 * i, 2 * next_i))
         triangles.append((bottom_center_index, 2 * next_i + 1, 2 * i + 1))
 
-    return Mesh(vertices, triangles)
+    return Object3D(Mesh(vertices, triangles), GREEN)
