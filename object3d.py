@@ -44,13 +44,10 @@ class Object3D:
         if keys[pygame.K_RIGHT]:
             self.rotation.y -= self.SPEED
 
+    def transform_vertex(self, vertex: Vector3) -> Vector3:
+        # apply object rotation and position
+        vertex = rotate(vertex, self.rotation)
+        return vertex + self.position
+
     def get_transformed_vertices(self) -> list[Vector3]:
-        transformed_vertices: list[Vector3] = []
-
-        for vertex in self.mesh.vertices:
-            # apply object rotation and position to each vertex
-            vertex = rotate(vertex, self.rotation)
-            vertex = vertex + self.position
-            transformed_vertices.append(vertex)
-
-        return transformed_vertices
+        return [self.transform_vertex(vertex) for vertex in self.mesh.vertices]

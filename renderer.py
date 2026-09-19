@@ -4,17 +4,16 @@ from camera import Camera
 from config import WIREFRAME_COLOUR
 from light import Light
 from object3d import Object3D
-from projection import project_point, world_to_screen
+from projection import point_to_screen
 from vector2 import Vector2
 
 
 class Renderer:
-    def __init__(self, screen: pygame.surface.Surface, camera: Camera, light:Light) -> None:
+    def __init__(self, screen: pygame.surface.Surface, camera: Camera, light: Light) -> None:
         self.screen = screen
         self.camera = camera
         self.light = light
         self.render_normal = False
-
 
     def toggle_normal(self) -> None:
         self.render_normal = not self.render_normal
@@ -30,10 +29,9 @@ class Renderer:
         world_vertices = object3d.get_transformed_vertices()
         camera_vertices = self.camera.transform_vertices(world_vertices)
 
-        # camera space -> 2d space -> screen coordinates
+        # camera space ->  screen coordinates
         for vertex in camera_vertices:
-            point = project_point(vertex)
-            point = world_to_screen(point, width, height, scale)
+            point = point_to_screen(vertex, width, height, scale)
             points.append(point)
 
         # get the depth of each triangle
@@ -84,11 +82,9 @@ class Renderer:
                 )
 
                 if self.render_normal:
-                    center_pos = world_to_screen(project_point(center), width, height, scale)
-                    normal_end_pos = world_to_screen(
-                        project_point(center + normal), width, height, scale
-                    )
-
+                    # render a normal line as the line from the center of each triangle outwards by the normal unit vector
+                    center_pos = point_to_screen(center, width, height, scale)
+                    normal_end_pos = point_to_screen(center + normal, width, height, scale)
                     pygame.draw.line(
                         self.screen,
                         (255, 165, 0),

@@ -27,13 +27,10 @@ class Camera:
         if keys[pygame.K_q]:
             self.position.y -= self.SPEED
 
+    def transform_vertex(self, vertex: Vector3) -> Vector3:
+        # apply camera rotation and position
+        vertex = rotate(vertex, -1 * self.rotation)
+        return vertex - self.position
+
     def transform_vertices(self, vertices: list[Vector3]) -> list[Vector3]:
-        transformed_vertices: list[Vector3] = []
-
-        for vertex in vertices:
-            # apply camera rotation and position to each vertex
-            vertex = rotate(vertex, -1 * self.rotation)
-            vertex = vertex - self.position
-            transformed_vertices.append(vertex)
-
-        return transformed_vertices
+        return [self.transform_vertex(vertex) for vertex in vertices]
