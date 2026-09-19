@@ -70,7 +70,7 @@ class Renderer:
             # only draw triangle of the normal is facing in similar direction as towards the camera
             if normal.dot(to_camera) >= 0:
                 # the brightness is calculated as the dot product of the normal and to_light
-                brightness = max(0.3, normal.dot(to_light))
+                brightness = min(1, 0.3 + max(0, normal.dot(to_light)))
                 colour = tuple(int(i * brightness) for i in object3d.colour)
 
                 pygame.draw.polygon(
