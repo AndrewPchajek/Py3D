@@ -19,7 +19,6 @@ class Renderer:
 
     def render_object(self, object3d: Object3D) -> None:
         scale = 400.0
-        line_width = 1
 
         width, height = self.screen.get_size()
         points: list[Vector2] = []
@@ -49,11 +48,11 @@ class Renderer:
         # painters algorithm
         triangles_to_draw.sort(reverse=True)
 
-        # use the vertex coordinates to draw the triangles first
-        for depth, triangle in triangles_to_draw:
+        # use the vertex coordinates to draw the triangles
+        for _, triangle in triangles_to_draw:
             i, j, k = triangle
 
-            # get the world coordinates of the triangle vertices
+            # get the camera coordinates of the triangle vertices
             a = camera_vertices[i]
             b = camera_vertices[j]
             c = camera_vertices[k]
@@ -65,19 +64,23 @@ class Renderer:
 
             # calculate the vector from the center of the triangle to the camera
             center = (a + b + c) / 3
-            to_camera = (-1 * center).normalize()
+            to_camera = (-1 * center).normalize()  # camera position is 0 in camera space
+            to_light = (self.camera.transform_vertex(self.light.position) - center).normalize()
 
             # only draw triangle of the normal is facing in similar direction as towards the camera
             if normal.dot(to_camera) >= 0:
+                # the brightness is calculated as the dot product of the normal and to_light
+                brightness = max(0.3, normal.dot(to_light))
+                colour = tuple(int(i * brightness) for i in object3d.colour)
+
                 pygame.draw.polygon(
                     self.screen,
-                    object3d.colour,
+                    colour,
                     (
                         (points[i].x, points[i].y),
                         (points[j].x, points[j].y),
                         (points[k].x, points[k].y),
                     ),
-                    line_width,
                 )
 
                 if self.render_normal:
