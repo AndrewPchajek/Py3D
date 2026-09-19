@@ -23,6 +23,8 @@ class Renderer:
         width, height = self.screen.get_size()
         points: list[Vector2] = []
 
+        light_cam_position = self.camera.transform_vertex(self.light.position)
+
         # object -> world space -> camera space
         world_vertices = object3d.get_transformed_vertices()
         camera_vertices = self.camera.transform_vertices(world_vertices)
@@ -65,13 +67,13 @@ class Renderer:
             # calculate the vector from the center of the triangle to the camera
             center = (a + b + c) / 3
             to_camera = (-1 * center).normalize()  # camera position is 0 in camera space
-            to_light = (self.camera.transform_vertex(self.light.position) - center).normalize()
+            to_light = (light_cam_position - center).normalize()
 
             # only draw triangle of the normal is facing in similar direction as towards the camera
             if normal.dot(to_camera) >= 0:
-                # the brightness is calculated as the dot product of the normal and to_light
-                brightness = min(1, 0.3 + max(0, normal.dot(to_light)))
-                colour = tuple(int(i * brightness) for i in object3d.colour)
+                colour = self.light.calculate_colour(
+                    object3d.colour, normal.dot(to_light), light_cam_position.distance_to(center)
+                )
 
                 pygame.draw.polygon(
                     self.screen,
